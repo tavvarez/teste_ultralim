@@ -1,0 +1,40 @@
+.content {
+    float: left;
+    position: absolute;
+    left: 65;
+    top: 10%;
+    display: flex;
+    padding: 2%;
+    order: 1;
+    margin-left: 20%;
+    height: 52%;
+}
+
+.buttons {
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+}
+
+.botao {
+    margin: 10px;
+}
+
+.resultados {
+    align-items: center;
+    float: right;
+    margin-top: 100px;
+    top: 10%;
+    margin-right: 10%;
+    padding: 2%;
+    flex-direction: column;
+    width: 40%;
+}
+
+.historico {
+    flex-direction: column;
+    position: absolute;
+    bottom: 90;
+    margin-left: 20px;
+    width: 89%;
+}

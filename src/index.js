@@ -1,0 +1,1 @@
+const btnDePesquisarCep = document.querySelector('')
