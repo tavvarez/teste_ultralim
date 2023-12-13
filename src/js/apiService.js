@@ -1,14 +1,16 @@
 const axios = require('axios')
 
-const apiViaCep = 'https://viacep.com.br/ws/01001000/json/'
-
-async function requisaoApi() {
+async function requisaoApi(apiViaCep) {
     try {
         const response = await axios.get(apiViaCep)
         const data = response.data
         console.log(data)
     } catch(error) {
         console.log('Algum erro aconteceu:' + error.message)
+        throw error
     }
 }
-requisaoApi()
+
+module.exports = {
+    requisaoApi: requisaoApi
+}
