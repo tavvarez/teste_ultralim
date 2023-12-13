@@ -1,5 +1,6 @@
 const axios = require('axios')
 
+// Função que faz o tratamento da requisição, gerando o resultado e tratando o erro se necessário
 async function requisaoApi(apiViaCep) {
     try {
         const response = await axios.get(apiViaCep)
