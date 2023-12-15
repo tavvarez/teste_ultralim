@@ -1,8 +1,7 @@
 const apiService = require('./apiService')
-const arrayDadosApi = []
 
-async function adicionarDadosArray(arrayDadosApi) {    
-    const apiViaCep = 'https://viacep.com.br/ws/89218075/json/'
+async function adicionarDadosArray() {    
+    const apiViaCep = 'https://viacep.com.br/ws/83280000/json/'
 
     try {
     const dadosDaApi = await apiService.requisicaoApi(apiViaCep)
@@ -12,5 +11,5 @@ async function adicionarDadosArray(arrayDadosApi) {
 
     }
 }
-
+// salvarJson()
 adicionarDadosArray()
