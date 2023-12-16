@@ -1,30 +1,44 @@
-const fs = require('fs')
-const path = require('path')
-
 function salvarJson(data) {
-    const dataDiretorio = path.resolve(__dirname, '..', '..','./data')
-    const filePath = path.resolve(dataDiretorio, 'address.json')
+    const dbNome = 'enderecoDB';
+    const enderecosSalvos = 'enderecos'
 
-    let dadosSalvos = []
+    const request = indexedDB.open(dbNome, 1)
 
-    try {
-        const conteudoJson = fs.readFileSync(filePath, 'utf-8')
-        dadosSalvos = JSON.parse(conteudoJson)
-    } catch (error) {
-        console.log('Erro:' + error.message)
+    
+    request.onupgradeneeded = function(event) {
+        const db = event.target.result
+        const objectStore = db.createObjectStore(enderecosSalvos, { keyPath: 'cep' })
     }
 
-    const novosDados = dadosSalvos.concat(data)
+    
+    request.onsuccess = function(event) {
+        const db = event.target.result
 
-    if (!fs.existsSync(dataDiretorio)) {
-        fs.mkdirSync(dataDiretorio, {recursive: true})
+        
+        const transaction = db.transaction([enderecosSalvos], 'readwrite')
+        const objectStore = transaction.objectStore(enderecosSalvos)
+
+        
+        const addRequest = objectStore.put(data)
+
+        addRequest.onsuccess = function() {
+            console.log('Endereço armazenado com sucesso')
+        }
+
+        addRequest.onerror = function(error) {
+            console.error('Erro ao armazenar endereço:', error)
+        }
+
+        // Encerrar a transação
+        transaction.oncomplete = function() {
+            db.close()
+        }
     }
 
-    fs.writeFileSync(filePath, JSON.stringify(novosDados, null, 2))
-
-    console.log('Endereços armazenados com sucesso em address.json')
+    // Manipular erros na abertura do banco de dados
+    request.onerror = function(error) {
+        console.error('Erro ao abrir o banco de dados:', error)
+    }
 }
 
-module.exports = {
-    salvarJson
-}
+export { salvarJson }

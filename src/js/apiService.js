@@ -1,4 +1,4 @@
-const {salvarJson} = require('./salvarJsonService')
+import { salvarJson } from './salvarJsonService.js'
 
 // Função que faz o tratamento da requisição, gerando o resultado e tratando o erro se necessário
 async function requisicaoApi(apiViaCep) {
@@ -13,6 +13,4 @@ async function requisicaoApi(apiViaCep) {
     }
 }
 
-module.exports = {
-    requisicaoApi: requisicaoApi
-}
+export { requisicaoApi }

@@ -1,4 +1,4 @@
-import { requisicaoApi } from './js/apiService'
+import { requisicaoApi } from './js/apiService.js'
 
 window.onload = adicionarElementosPagina
 
@@ -34,3 +34,5 @@ function adicionarAoHistorico(dados) {
     const historico = document.querySelector('.historico p')
     historico.innerHTML = `<strong>CEP:</strong> ${dados.cep}, <strong>Cidade:</strong> ${dados.localidade}, <strong>Estado:</strong> ${dados.uf}`
 }
+
+document.addEventListener('DOMContentLoaded', adicionarElementosPagina)
