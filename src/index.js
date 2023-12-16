@@ -12,6 +12,7 @@ async function adicionarElementosPagina() {
         const cep = cepEntrada.value
 
         try {
+            validarCep(cep)
             // Chama a função que obtém os dados da API
             const dados = await requisicaoApi(`https://viacep.com.br/ws/${cep}/json`)
 
@@ -22,17 +23,68 @@ async function adicionarElementosPagina() {
             document.getElementById('cidade').value = dados.localidade
             document.getElementById('estado').value = dados.uf
 
-            adicionarAoHistorico(dados);
+            adicionarAoHistorico(dados)
         } catch (error) {
-            console.error(error);
+            console.error(error)
         }
     })
 
 }
 
-function adicionarAoHistorico(dados) {
+function validarCep(cep) {
+    const cepLimpo = cep.replace(/\D/g, '')
+
+    
+    if (cepLimpo.length !== 8) {
+        alert('CEP inválido')
+        throw new Error('CEP inválido. Certifique-se de inserir um CEP válido com 8 dígitos.')
+    }
+}
+
+async function adicionarAoHistorico(dados) {
     const historico = document.querySelector('.historico p')
-    historico.innerHTML = `<strong>CEP:</strong> ${dados.cep}, <strong>Cidade:</strong> ${dados.localidade}, <strong>Estado:</strong> ${dados.uf}`
+    const registros = await obterTodosRegistrosIndexedDB()
+    const historicoHTML = registros.map(registro => {
+        return `<strong>CEP:</strong> ${registro.cep}, <strong>Cidade:</strong> ${registro.localidade}, <strong>Estado:</strong> ${registro.uf}<br>`
+    }).join('')
+
+    historico.innerHTML = historicoHTML
+}
+
+async function obterTodosRegistrosIndexedDB() {
+    const dbNome = 'enderecoDB'
+    const enderecosSalvos = 'enderecos'
+
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open(dbNome)
+
+        request.onsuccess = function(event) {
+            const db = event.target.result
+
+            const transaction = db.transaction([enderecosSalvos], 'readonly')
+            const objectStore = transaction.objectStore(enderecosSalvos)
+
+            const registros = []
+
+            objectStore.openCursor().onsuccess = function(event) {
+                const cursor = event.target.result
+                if (cursor) {
+                    registros.push(cursor.value)
+                    cursor.continue()
+                } else {
+                    resolve(registros)
+                }
+            }
+
+            transaction.oncomplete = function() {
+                db.close()
+            }
+        }
+
+        request.onerror = function(error) {
+            reject(error)
+        }
+    })
 }
 
 document.addEventListener('DOMContentLoaded', adicionarElementosPagina)

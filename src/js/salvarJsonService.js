@@ -1,5 +1,5 @@
 function salvarJson(data) {
-    const dbNome = 'enderecoDB';
+    const dbNome = 'enderecoDB'
     const enderecosSalvos = 'enderecos'
 
     const request = indexedDB.open(dbNome, 1)
