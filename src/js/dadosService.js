@@ -1,15 +1,19 @@
-const apiService = require('./apiService')
+// DEPRECATED
 
-async function adicionarDadosArray() {    
-    const apiViaCep = 'https://viacep.com.br/ws/83280000/json/'
+// const apiService = require('./apiService')
 
-    try {
-    const dadosDaApi = await apiService.requisicaoApi(apiViaCep)
-    return dadosDaApi
-    } catch (error) {
-    console.error(error)
+// async function adicionarDadosArray(apiViaCep) {    
+//     const apiViaCep = 'https://viacep.com.br/ws/89218075/json/'
 
-    }
-}
-// salvarJson()
-adicionarDadosArray()
+//     try {
+//     const dadosDaApi = await apiService.requisicaoApi(apiViaCep)
+//     return dadosDaApi
+//     } catch (error) {
+//     console.error(error)
+
+//     }
+// }
+
+// module.exports = {
+//     adicionarDadosArray: adicionarDadosArray
+// }

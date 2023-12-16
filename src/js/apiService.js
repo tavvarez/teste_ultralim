@@ -1,24 +1,17 @@
-const axios = require('axios')
 const {salvarJson} = require('./salvarJsonService')
 
 // Função que faz o tratamento da requisição, gerando o resultado e tratando o erro se necessário
 async function requisicaoApi(apiViaCep) {
     try {
-        const response = await axios.get(apiViaCep)
-        const data = response.data
+        const response = await fetch(apiViaCep)
+        const data = await response.json()
         salvarJson(data)
-        const arrayApi = []
-        for (let chave in data) {
-            arrayApi.push(data[chave])
-        }
-        console.log(arrayApi)
+        return data
     } catch(error) {
         console.log('Algum erro aconteceu:' + error.message)
         throw error
     }
 }
-
-
 
 module.exports = {
     requisicaoApi: requisicaoApi
