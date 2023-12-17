@@ -17,7 +17,6 @@ function salvarJson(data) {
         
         const transaction = db.transaction([enderecosSalvos], 'readwrite')
         const objectStore = transaction.objectStore(enderecosSalvos)
-
         
         const addRequest = objectStore.put(data)
 
