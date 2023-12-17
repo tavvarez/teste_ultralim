@@ -1,4 +1,5 @@
 import { requisicaoApi } from './js/apiService.js'
+import { validarCep } from './validacao/validarCep.js'
 
 window.onload = adicionarElementosPagina
 
@@ -31,15 +32,6 @@ async function adicionarElementosPagina() {
 
 }
 
-function validarCep(cep) {
-    const cepLimpo = cep.replace(/\D/g, '')
-
-    
-    if (cepLimpo.length !== 8) {
-        alert('CEP inválido')
-        throw new Error('CEP inválido. Certifique-se de inserir um CEP válido com 8 dígitos.')
-    }
-}
 
 async function adicionarAoHistorico(dados) {
     const historico = document.querySelector('.historico p')
